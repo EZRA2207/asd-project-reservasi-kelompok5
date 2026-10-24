@@ -1,41 +1,32 @@
-
+# --- F2: MENAMPILKAN SEMUA RESERVASI ---
 def tampilkan_semua_reservasi(daftar_reservasi: list) -> None:
-    """Fitur F2: menampilkan semua data reservasi."""
+    """Menampilkan semua data reservasi restoran."""
 
-    print("\n" + "=" * 70)
-    print("                 DAFTAR SEMUA RESERVASI")
-    print("=" * 70)
+    print("\n" + "=" * 50)
+    print("       DAFTAR SEMUA RESERVASI")
+    print("          RESTORAN PAWON DIENG")
+    print("=" * 50)
 
-    # Memeriksa apakah ada data reservasi
+    # Mengecek apakah ada data reservasi
     if not daftar_reservasi:
-        print("Belum ada data reservasi yang tersimpan.")
-        print("=" * 70)
+        print("Belum ada data reservasi.")
+        print("=" * 50)
         return
 
-    # Menampilkan judul kolom
-    print(
-        f"{'No':<4}"
-        f"{'Kode Reservasi':<18}"
-        f"{'Nama Pemesan':<22}"
-        f"{'Jenis':<12}"
-        f"{'Status':<12}"
-    )
-    print("-" * 70)
+    # Menampilkan jumlah reservasi
+    print(f"Jumlah Reservasi: {len(daftar_reservasi)}")
+    print("-" * 50)
 
-    # Menampilkan setiap reservasi
+    # Menampilkan setiap data reservasi
     for nomor, reservasi in enumerate(daftar_reservasi, start=1):
-        print(
-            f"{nomor:<4}"
-            f"{reservasi['kode_reservasi']:<18}"
-            f"{reservasi['nama_pemesan']:<22}"
-            f"{reservasi['jenis']:<12}"
-            f"{reservasi['status']:<12}"
-        )
+        print(f"\nReservasi ke-{nomor}")
+        print(f"Kode Reservasi : {reservasi['kode_reservasi']}")
+        print(f"Nama Pemesan   : {reservasi['nama_pemesan']}")
+        print(f"Jenis Meja     : {reservasi['jenis']}")
+        print(f"Detail Meja    : {reservasi['detail']}")
+        print(f"Tanggal        : {reservasi['tanggal']}")
+        print(f"Status         : {reservasi['status']}")
+        print("-" * 50)
 
-        print(f"     Detail  : {reservasi['detail']}")
-        print(f"     Tanggal : {reservasi['tanggal']}")
-        print("-" * 70)
-
-    # Menampilkan jumlah seluruh reservasi
-    print(f"Total reservasi: {len(daftar_reservasi)}")
-    print("=" * 70)
+    print("Semua data reservasi berhasil ditampilkan.")
+    print("=" * 50)
