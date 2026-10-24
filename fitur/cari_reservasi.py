@@ -1,128 +1,72 @@
-# ==========================================
-# MODUL / FITUR 3: CARI RESERVASI (PANDUAN INPUT SPESIFIK)
-# ==========================================
+"""
+Sistem Reservasi - Tahap 1
+Fitur: F3 Cari Reservasi (Berdasarkan Kode atau Nama Pemesan)
+"""
 
-# 2 Contoh Data Reservasi Awal (Array of Struct / List of Dict)
-daftar_reservasi = [
-    {
-        "kode_reservasi": "RSV001",
-        "nama_pemesan": "Budi Santoso",
-        "jenis": "Ruangan",
-        "detail": "Ruang Rapat A",
-        "tanggal": "2026-10-15",
-        "status": "Aktif"
-    },
-    {
-        "kode_reservasi": "RSV002",
-        "nama_pemesan": "Siti Rahma",
-        "jenis": "Tiket",
-        "detail": "Seminar Nasional Teknologi",
-        "tanggal": "2026-10-20",
-        "status": "Aktif"
-    }
-]
+def cari_reservasi(daftar_reservasi: list) -> None:
+    """Fitur F3: Mencari reservasi berdasarkan kode atau nama pemesan."""
+    print("\n" + "=" * 50)
+    print("          CARI DATA RESERVASI")
+    print("=" * 50)
 
-def format_status(status):
-    """Fungsi helper untuk memberikan penanda visual pada status."""
-    if status.lower() == "aktif":
-        return "[AKTIF]"
-    elif status.lower() == "selesai":
-        return "[SELESAI]"
-    elif status.lower() == "dibatalkan":
-        return "[DIBATALKAN]"
-    return f"[{status.upper()}]"
+    # Mengecek apakah data reservasi kosong
+    if not daftar_reservasi:
+        print("Belum ada data reservasi yang tersimpan di sistem.")
+        print("=" * 50)
+        return
 
-def tampilkan_detail_reservasi(r, nomor=None):
-    """Fungsi helper untuk menampilkan detail reservasi dalam format baris ke bawah."""
-    if nomor:
-        print(f"\n--- DATA RESERVASI KE-{nomor} ---")
-    else:
-        print("\n--- DETAIL RESERVASI ---")
-    print(f"Kode Reservasi  : {r['kode_reservasi']}")
-    print(f"Nama Pemesan    : {r['nama_pemesan']}")
-    print(f"Jenis           : {r['jenis']}")
-    print(f"Detail          : {r['detail']}")
-    print(f"Tanggal         : {r['tanggal']}")
-    print(f"Status          : {format_status(r['status'])}")
-    print("-" * 35)
+    print("Pilih metode pencarian:")
+    print("1. Cari berdasarkan Kode Reservasi (Exact Match)")
+    print("2. Cari berdasarkan Nama Pemesan (Partial Match)")
+    print("-" * 50)
 
-def cari_reservasi():
-    print("\n" + "="*40)
-    print("       MENU: CARI RESERVASI")
-    print("="*40)
-    
-    # Looping untuk validasi pemilihan menu (1 atau 2)
-    while True:
-        print("1. Cari berdasarkan Kode Reservasi (Exact Match)")
-        print("2. Cari berdasarkan Nama Pemesan (Partial Match)")
-        pilihan = input("Pilih metode pencarian (1/2): ").strip()
-        
-        if pilihan in ["1", "2"]:
-            break
-        else:
-            print("\n[ERROR] Pilihan tidak valid! Silakan masukkan angka 1 atau 2.\n")
-    
+    pilihan = input("Masukkan pilihan (1/2): ").strip()
+
     if pilihan == "1":
-        # Looping pencarian kode dengan panduan input yang spesifik untuk Kode Reservasi
-        while True:
-            kata_kunci = input("Masukkan Kode Reservasi (atau ketik 'keluar' untuk batal): ").strip()
-            
-            # Cek jika user ingin membatalkan
-            if kata_kunci.lower() == 'keluar':
-                print("[INFO] Pencarian dibatalkan.")
-                return
-            
-            # Validasi input kosong
-            if not kata_kunci:
-                print("[ERROR] Kode Reservasi tidak boleh kosong! Silakan coba lagi.\n")
-                continue
-            
-            # Cek apakah kode reservasi ada di dalam sistem (Exact Match)
-            hasil = None
-            for r in daftar_reservasi:
-                if r["kode_reservasi"].lower() == kata_kunci.lower():
-                    hasil = r
-                    break
-            
-            if hasil:
-                print("\n[SUKSES] Reservasi ditemukan!")
-                tampilkan_detail_reservasi(hasil)
-                break  # Keluar dari loop karena data sudah ketemu
-            else:
-                print(f"[ERROR] Reservasi dengan kode '{kata_kunci}' tidak ditemukan di sistem. Silakan coba lagi.\n")
-            
-    elif pilihan == "2":
-        # Looping pencarian nama dengan panduan input yang spesifik untuk Nama Pemesan
-        while True:
-            kata_kunci = input("Masukkan Nama Pemesan (atau ketik 'keluar' untuk batal): ").strip()
-            
-            # Cek jika user ingin membatalkan
-            if kata_kunci.lower() == 'keluar':
-                print("[INFO] Pencarian dibatalkan.")
-                return
-            
-            # Validasi input kosong
-            if not kata_kunci:
-                print("[ERROR] Nama Pemesan tidak boleh kosong! Silakan coba lagi.\n")
-                continue
-            
-            # Menyaring data yang mengandung kata kunci pada nama_pemesan (Partial Match)
-            hasil_pencarian = []
-            for r in daftar_reservasi:
-                if kata_kunci.lower() in r["nama_pemesan"].lower():
-                    hasil_pencarian.append(r)
-            
-            if hasil_pencarian:
-                jumlah = len(hasil_pencarian)
-                print(f"\n[SUKSES] Ditemukan {jumlah} reservasi yang cocok dengan kata kunci '{kata_kunci}':")
-                
-                # Menampilkan setiap hasil pencarian menggunakan format baris ke bawah
-                for idx, r in enumerate(hasil_pencarian, 1):
-                    tampilkan_detail_reservasi(r, nomor=idx)
-                break  # Keluar dari loop karena data ditemukan
-            else:
-                print(f"[ERROR] Tidak ada reservasi dengan nama pemesan yang mengandung '{kata_kunci}'. Silakan coba lagi.\n")
+        kode_cari = input("Masukkan Kode Reservasi yang dicari: ").strip()
+        if not kode_cari:
+            print("Error: Kode reservasi tidak boleh kosong.")
+            return
 
-# --- Blok Pengujian Mandiri ---
-if __name__ == "__main__":
-    cari_reservasi()
+        # Pencarian berdasarkan kode (harus persis sama / exact match)[cite: 3]
+        hasil = [r for r in daftar_reservasi if r.get("kode_reservasi", "").lower() == kode_cari.lower()]
+
+        if hasil:
+            print(f"\nReservasi dengan kode '{kode_cari}' ditemukan:")
+            print("-" * 50)
+            for r in hasil:
+                print(f"Kode Reservasi : {r.get('kode_reservasi', '-')}")
+                print(f"Nama Pemesan   : {r.get('nama_pemesan', '-')}")
+                print(f"Jenis Meja     : {r.get('jenis', '-')}")
+                print(f"Detail Meja    : {r.get('detail', '-')}")
+                print(f"Tanggal        : {r.get('tanggal', '-')}")
+                print(f"Status         : {r.get('status', 'Aktif')}")
+                print("-" * 50)
+        else:
+            print(f"Reservasi dengan kode '{kode_cari}' tidak ditemukan.")
+
+    elif pilihan == "2":
+        nama_cari = input("Masukkan Nama Pemesan yang dicari: ").strip()
+        if not nama_cari:
+            print("Error: Nama pemesan tidak boleh kosong.")
+            return
+
+        # Pencarian berdasarkan nama (mengandung kata kunci / partial match)[cite: 3]
+        hasil = [r for r in daftar_reservasi if nama_cari.lower() in r.get("nama_pemesan", "").lower()]
+
+        if hasil:
+            print(f"\nDitemukan {len(hasil)} reservasi dengan kata kunci nama '{nama_cari}':")
+            print("-" * 50)
+            for nomor, reservasi in enumerate(hasil, start=1):
+                print(f"Hasil ke-{nomor}")
+                print(f"Kode Reservasi : {reservasi.get('kode_reservasi', '-')}")
+                print(f"Nama Pemesan   : {reservasi.get('nama_pemesan', '-')}")
+                print(f"Jenis Meja     : {reservasi.get('jenis', '-')}")
+                print(f"Detail Meja    : {reservasi.get('detail', '-')}")
+                print(f"Tanggal        : {reservasi.get('tanggal', '-')}")
+                print(f"Status         : {reservasi.get('status', 'Aktif')}")
+                print("-" * 50)
+        else:
+            print(f"Reservasi dengan nama pemesan '{nama_cari}' tidak ditemukan.")
+    else:
+        print("Pilihan menu pencarian tidak valid.")
