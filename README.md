@@ -12,10 +12,10 @@ Data reservasi disimpan menggunakan struktur data list of dictionary (Array of S
 
 ## 2. Anggota Kelompok
 
-| No. | Nama Anggota | NIM | Tanggung Jawab |
-|---|---|---|---|
-| 1 | Gilang | [Isi NIM] | F1: Tambah reservasi baru |
-| 2 | Richard | [Isi NIM] | F2: Tampilkan semua reservasi |
-| 3 | Ezra | [Isi NIM] | F3: Cari reservasi |
-| 4 |  | [Isi NIM] | F4: Update status reservasi |
-| 5 | Yohanes | [23083000005] | F6: Hapus reservasi |
+| No. | Nama Anggota | NIM           | Tanggung Jawab                |
+| --- | ------------ | ------------- | ----------------------------- |
+| 1   | Gilang       | [Isi NIM]     | F1: Tambah reservasi baru     |
+| 2   | Richard      | [Isi NIM]     | F2: Tampilkan semua reservasi |
+| 3   | Ezra         | [Isi NIM]     | F3: Cari reservasi            |
+| 4   |              | [Isi NIM]     | F4: Update status reservasi   |
+| 5   | Yohanes      | [23083000005] | F6: Hapus reservasi           |
