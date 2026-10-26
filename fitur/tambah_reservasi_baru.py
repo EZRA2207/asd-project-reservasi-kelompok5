@@ -210,7 +210,7 @@ def tambah_reservasi(daftar_reservasi: list) -> None:
 
     print(f"\nReservasi {kode_reservasi} atas nama {nama_pemesan} berhasil ditambahkan.")
     print("\nProgram penambahan reservasi baru selesai.\n")
-    sys.exit()
+    return
 
 # --- MENU UTAMA ---
 def main():
