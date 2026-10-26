@@ -1,73 +1,49 @@
-
 def hapus_reservasi(daftar_reservasi: list) -> None:
     """Menghapus reservasi berdasarkan kode dengan konfirmasi pengguna."""
 
     print("\n=== HAPUS RESERVASI ===")
 
-    # Memeriksa apakah data reservasi tersedia
     if not daftar_reservasi:
         print("Belum ada data reservasi.")
         return
 
-    # Meminta kode reservasi
-    kode = input(
-        "Masukkan kode reservasi yang ingin dihapus: "
-    ).strip()
+    kode = input("Masukkan kode reservasi yang ingin dihapus: ").strip()
 
-    # Validasi kode tidak boleh kosong
     if not kode:
         print("Kode reservasi tidak boleh kosong.")
         return
 
-    # Mencari reservasi berdasarkan kode
-    indeks = -1
+    # Cari reservasi berdasarkan kode, tanpa membedakan huruf besar/kecil.
+    reservasi_ditemukan = None
 
-    for i, reservasi in enumerate(daftar_reservasi):
-        if reservasi.get("kode_reservasi", "").lower() == kode.lower():
-            indeks = i
+    for reservasi in daftar_reservasi:
+        if reservasi["kode_reservasi"].lower() == kode.lower():
+            reservasi_ditemukan = reservasi
             break
 
-    # Jika kode reservasi tidak ditemukan
-    if indeks == -1:
+    if reservasi_ditemukan is None:
         print(f"Reservasi dengan kode '{kode}' tidak ditemukan.")
         return
 
-    # Mengambil data reservasi yang ditemukan
-    reservasi = daftar_reservasi[indeks]
-
-    # Menampilkan detail sebelum penghapusan
+    # Tampilkan detail reservasi sebelum meminta konfirmasi.
     print("\nData reservasi yang akan dihapus:")
     print("----------------------------------")
-    print(f"Kode reservasi : {reservasi.get('kode_reservasi', '-')}")
-    print(f"Nama pemesan   : {reservasi.get('nama_pemesan', '-')}")
-    print(f"Jenis          : {reservasi.get('jenis', '-')}")
-    print(f"Detail         : {reservasi.get('detail', '-')}")
-    print(f"Tanggal        : {reservasi.get('tanggal', '-')}")
-    print(f"Status         : {reservasi.get('status', '-')}")
+    print(f"Kode reservasi : {reservasi_ditemukan['kode_reservasi']}")
+    print(f"Nama pemesan   : {reservasi_ditemukan['nama_pemesan']}")
+    print(f"Jenis          : {reservasi_ditemukan['jenis']}")
+    print(f"Detail         : {reservasi_ditemukan['detail']}")
+    print(f"Tanggal        : {reservasi_ditemukan['tanggal']}")
+    print(f"Status         : {reservasi_ditemukan['status']}")
     print("----------------------------------")
 
-    # Meminta konfirmasi penghapusan
-    konfirmasi = input(
-        "Yakin ingin menghapus reservasi ini? (Y/N): "
-    ).strip().upper()
+    konfirmasi = input("Yakin ingin menghapus reservasi ini? (Y/N): ").strip().upper()
 
-    # Menghapus reservasi jika dikonfirmasi
     if konfirmasi == "Y":
-        daftar_reservasi.pop(indeks)
-
+        daftar_reservasi.remove(reservasi_ditemukan)
         print(
-            f"Reservasi {reservasi['kode_reservasi']} "
-            f"atas nama {reservasi['nama_pemesan']} "
+            f"Reservasi {reservasi_ditemukan['kode_reservasi']} "
+            f"atas nama {reservasi_ditemukan['nama_pemesan']} "
             "berhasil dihapus dari sistem."
         )
-
-    # Membatalkan penghapusan
-    elif konfirmasi == "N":
-        print("Penghapusan dibatalkan. Data tetap tersimpan.")
-
-    # Menolak konfirmasi selain Y atau N
     else:
-        print(
-            "Pilihan tidak valid. "
-            "Penghapusan dibatalkan."
-        )
+        print("Penghapusan dibatalkan.")

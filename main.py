@@ -1,23 +1,25 @@
 """
 Sistem Reservasi Restoran Pawon Dieng
-Menu utama untuk menghubungkan F1, F2, F3, F4, dan F5.
+Menu utama untuk menghubungkan fitur F1, F2, F3, F4, F5, dan F6.
 """
 
 import sys
 from pathlib import Path
 
 # Menambahkan folder utama proyek ke jalur pencarian Python
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-# Import fungsi fitur F1 sampai F5
+# Import fungsi fitur F1 sampai F6
 from fitur.tambah_reservasi_baru import tambah_reservasi
 from fitur.tampilkan_semua_reservasi import tampilkan_semua_reservasi
 from fitur.cari_reservasi import cari_reservasi
 from fitur.update_status_reservasi import update_status_reservasi
 from fitur.filter_reservasi_berdasarkan_status import filter_reservasi_berdasarkan_status
+from fitur.hapus_reservasi import hapus_reservasi
 
 
 def main():
+    # Menyimpan data reservasi selama program berjalan
     daftar_reservasi = []
 
     while True:
@@ -29,6 +31,7 @@ def main():
         print("3. Cari Reservasi")
         print("4. Update Status Reservasi")
         print("5. Filter Reservasi Berdasarkan Status")
+        print("6. Hapus Reservasi")
         print("0. Keluar")
         print("-" * 40)
 
@@ -48,6 +51,9 @@ def main():
 
         elif pilihan == "5":
             filter_reservasi_berdasarkan_status(daftar_reservasi)
+
+        elif pilihan == "6":
+            hapus_reservasi(daftar_reservasi)
 
         elif pilihan == "0":
             print("\nProgram diberhentikan. Terima kasih!\n")
