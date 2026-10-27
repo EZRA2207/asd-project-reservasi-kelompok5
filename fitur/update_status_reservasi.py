@@ -32,21 +32,26 @@ def update_status_reservasi(daftar_reservasi: list) -> None:
         )
     print("-" * 50)
 
-    kode_cari = input("Masukkan Kode Reservasi yang akan diubah: ").strip()
-    if not kode_cari:
-        print("Error: Kode reservasi tidak boleh kosong.")
-        return
-
-    # Pencarian exact match (tidak membedakan huruf besar/kecil)
+    # Loop input kode reservasi sampai kode valid ditemukan
     reservasi = None
-    for r in daftar_reservasi:
-        if r.get("kode_reservasi", "").lower() == kode_cari.lower():
-            reservasi = r
-            break
+    while True:
+        kode_cari = input("Masukkan Kode Reservasi yang akan diubah: ").strip()
+        if not kode_cari:
+            print("Error: Kode reservasi tidak boleh kosong. Silakan coba lagi.")
+            continue
 
-    if reservasi is None:
-        print(f"Reservasi dengan kode '{kode_cari}' tidak ditemukan.")
-        return
+        # Pencarian exact match (tidak membedakan huruf besar/kecil)
+        for r in daftar_reservasi:
+            if r.get("kode_reservasi", "").lower() == kode_cari.lower():
+                reservasi = r
+                break
+
+        if reservasi is None:
+            print(f"Reservasi dengan kode '{kode_cari}' tidak ditemukan. Silakan coba lagi.")
+            print("-" * 50)
+            continue
+
+        break  # kode valid, keluar dari loop
 
     status_lama = reservasi.get("status", "Aktif")
 
@@ -64,15 +69,20 @@ def update_status_reservasi(daftar_reservasi: list) -> None:
     print("0. Batal")
     print("-" * 50)
 
-    pilihan = input("Masukkan pilihan: ").strip()
+    # Loop input pilihan status sampai valid (1-3 atau 0)
+    while True:
+        pilihan = input("Masukkan pilihan: ").strip()
 
-    if pilihan == "0":
-        print("Update status dibatalkan.")
-        return
+        if pilihan == "0":
+            print("Update status dibatalkan.")
+            return
 
-    if pilihan not in PILIHAN_STATUS:
-        print("Pilihan status tidak valid. Status tidak diubah.")
-        return
+        if pilihan not in PILIHAN_STATUS:
+            print("Pilihan status tidak valid. Masukkan 1, 2, 3, atau 0 untuk batal.")
+            print("-" * 50)
+            continue
+
+        break  # pilihan valid, keluar dari loop
 
     status_baru = PILIHAN_STATUS[pilihan]
 
